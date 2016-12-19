@@ -274,19 +274,41 @@ return acc;
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
     for (var key in arguments[1]){
-      arguments[0][key]
+     
         arguments[0][key]=arguments[1][key]
+}
+ for (var key in arguments[2]){
+     
+        arguments[0][key]=arguments[2][key]
 
       return arguments[0]
-    }
+   } 
     return arguments[0]
     }
 
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
-  };
-
+   
+  //  for(var i=0;i<arguments.length;i++){
+  //  	for (var key in arguments[i+1]){
+  //  	if(arguments[0][key]){
+  //  		arguments[0][key]=arguments[0][key]
+  //  	}else {
+  //  		arguments[0][key]=arguments[i+1][key]		
+  //  	}
+  //  	}
+  //  }
+  // return arguments[0]
+  for (var i = 1; i < arguments.length; i++) {
+  	for(var key in arguments[i]){
+  		if(obj[key] === undefined){
+  			obj[key]=arguments[i][key];
+  		}
+  	}
+  }
+  return obj;
+}
 
   /**
    * FUNCTIONS
@@ -328,7 +350,19 @@ return acc;
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
-  };
+  	var x={}
+ 	var result=""
+  	return function(){
+  		result=JSON.stringify(arguments)	
+  if(x[result]){
+  		return x[result]
+  	}
+  	return x[result]=func.apply(this, arguments)
+   
+}
+return func()
+  }
+
 
   // Delays a function for the given number of milliseconds, and then calls
   // it with the arguments supplied.
@@ -337,6 +371,10 @@ return acc;
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+  	if(arguments.length>2)
+  	var time=setInterval(func(arguments[2],arguments[3]),wait)
+  return setInterval(func,wait)
+  
   };
 
 
@@ -351,6 +389,11 @@ return acc;
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
+  	var arr=[];
+  	for(var i=array.length-1;i>=0;i--){
+  		arr.push(array[i])
+  	}
+  	return arr
   };
 
 
@@ -365,6 +408,10 @@ return acc;
   // Calls the method named by functionOrKey on each value in the list.
   // Note: You will need to learn a bit about .apply to complete this.
   _.invoke = function(collection, functionOrKey, args) {
+  	var x=functionOrKey.name
+  	return _.map(collection,function(element){
+  		return element.x
+  	})
   };
 
   // Sort the object's values by a criterion produced by an iterator.
